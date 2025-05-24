@@ -1,8 +1,5 @@
 # Company_Grow
 CompanyGrow is a smart workforce platform for organizations to nurture employee growth with tailored training, intelligent project allocation, real-time rewards, and live analytics. Match skills to projects, track progress, and boost engagement with badge-based bonuses.
-# CompanyGrow
-
-CompanyGrow is a full-stack web application for managing employee training, project assignments, course enrollments, analytics, and rewards in an organization.
 
 ## Features
 
@@ -109,10 +106,4 @@ company_grow/
 - Update styles in `frontend/src/index.css` and `frontend/src/App.css`.
 - Add more fields or features as needed in the Mongoose models and React components.
 
-## License
-
-This project is for educational and demonstration purposes.
-
----
-
-**Made with ❤️ for organizational growth and learning.**
+**
