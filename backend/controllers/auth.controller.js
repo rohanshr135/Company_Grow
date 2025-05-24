@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 export const signup = async (req, res) => {
   try {
     console.log("Received signup request:", req.body);
-    const { name, username, email, password, role } = req.body;
+    const { name, username, email, password } = req.body;
 
     // Validate input
     if (!name || !username || !email || !password) {
@@ -32,6 +32,12 @@ export const signup = async (req, res) => {
         .json({ error: "Password must be at least 6 characters long" });
     }
 
+    // Check if this is the first user
+    const isFirstUser = (await User.countDocuments()) === 0;
+
+    // Assign "admin" role to the first user, otherwise default to "employee"
+    const role = isFirstUser ? "admin" : "employee";
+
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -42,7 +48,6 @@ export const signup = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      role: role || "employee",
     });
 
     generateTokenAndSendCookie(newUser._id, res);

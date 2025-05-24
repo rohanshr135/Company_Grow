@@ -1,8 +1,11 @@
 import express from "express";
-import authRoutes from "./routes/auth.routes.js"; // Adjust the path as necessary
+import "./models/course.model.js";
+import adminRoutes from "./routes/admin.routes.js";
+import employeeRoutes from "./routes/employee.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import connectMongoDB from "./db/connectMongoDB.js"; // Adjust the path as necessary
+import connectMongoDB from "./db/connectMongoDB.js";
 import cookieParser from "cookie-parser";
 dotenv.config();
 
@@ -14,6 +17,8 @@ app.use(express.json({ type: "*/*" }));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", employeeRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

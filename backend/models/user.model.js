@@ -1,69 +1,32 @@
 import mongoose from "mongoose";
 
-const { Schema, model, Types } = mongoose;
-
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-    },
+    name: { type: String, required: true },
     email: {
       type: String,
       required: true,
       unique: true,
       lowercase: true,
     },
-    password: {
-      type: String,
-      required: true,
-    },
+    password: { type: String, required: true },
     role: {
       type: String,
       enum: ["employee", "admin"],
       default: "employee",
     },
-    skills: {
-      type: [String],
-      default: [],
-    },
-    experience: {
-      type: String,
-      default: "",
-    },
-    profileImage: {
-      type: String,
-      default: "",
-    },
-    enrolledCourses: [
-      {
-        type: Types.ObjectId,
-        ref: "Course",
-      },
-    ],
+    skills: [String],
+    experience: String,
+    profileImage: String,
+
+    enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
     assignedProjects: [
-      {
-        type: Types.ObjectId,
-        ref: "Project",
-      },
+      { type: mongoose.Schema.Types.ObjectId, ref: "Project" },
     ],
-    badges: [
-      {
-        type: Types.ObjectId,
-        ref: "Badge",
-      },
-    ],
+    badges: [{ type: mongoose.Schema.Types.ObjectId, ref: "Badge" }],
   },
   { timestamps: true }
 );
 
-const User = model("User", userSchema);
-
+const User = mongoose.model("User", userSchema);
 export default User;
