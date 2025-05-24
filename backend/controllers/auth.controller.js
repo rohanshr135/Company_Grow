@@ -4,10 +4,16 @@ import bcrypt from "bcryptjs";
 
 export const signup = async (req, res) => {
   try {
-    console.log("Received signup request:", req.body);
-    const { name, username, email, password } = req.body;
+    const {
+      name,
+      username,
+      email,
+      password,
+      skills,
+      experience,
+      profileImage,
+    } = req.body;
 
-    // Validate input
     if (!name || !username || !email || !password) {
       return res.status(400).json({ error: "All fields are required" });
     }
@@ -32,22 +38,21 @@ export const signup = async (req, res) => {
         .json({ error: "Password must be at least 6 characters long" });
     }
 
-    // Check if this is the first user
     const isFirstUser = (await User.countDocuments()) === 0;
-
-    // Assign "admin" role to the first user, otherwise default to "employee"
     const role = isFirstUser ? "admin" : "employee";
 
-    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create user
     const newUser = await User.create({
       name,
       username,
       email,
       password: hashedPassword,
+      role,
+      skills: skills || [],
+      experience: experience || "",
+      profileImage: profileImage || undefined,
     });
 
     generateTokenAndSendCookie(newUser._id, res);
@@ -58,6 +63,8 @@ export const signup = async (req, res) => {
       username: newUser.username,
       email: newUser.email,
       role: newUser.role,
+      skills: newUser.skills,
+      experience: newUser.experience,
       profileImage: newUser.profileImage,
       enrolledCourses: newUser.enrolledCourses,
       assignedProjects: newUser.assignedProjects,
@@ -66,7 +73,6 @@ export const signup = async (req, res) => {
       updatedAt: newUser.updatedAt,
     });
   } catch (error) {
-    console.error("Error during signup:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -97,17 +103,15 @@ export const login = async (req, res) => {
       badges: user.badges,
     });
   } catch (error) {
-    console.error("Error during login:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const logout = async (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: 0 });
+    res.cookie("token", "", { maxAge: 0 });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
-    console.log("Error in logout controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -117,7 +121,6 @@ export const getMe = async (req, res) => {
     const user = await User.findById(req.user._id).select("-password");
     res.status(200).json(user);
   } catch (error) {
-    console.log("Error in getMe controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

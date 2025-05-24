@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    username: { type: String, required: true, unique: true },
     email: {
       type: String,
       required: true,
@@ -15,15 +16,26 @@ const userSchema = new mongoose.Schema(
       enum: ["employee", "admin"],
       default: "employee",
     },
-    skills: [String],
-    experience: String,
-    profileImage: String,
-
-    enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
-    assignedProjects: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Project" },
+    skills: { type: [String], default: [] }, // Array of skills
+    experience: { type: String, default: "" }, // e.g. "3 years"
+    profileImage: {
+      type: String,
+      default: "https://example.com/avatar.jpg", // Default avatar
+    },
+    enrolledCourses: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Course", default: [] },
     ],
-    badges: [{ type: mongoose.Schema.Types.ObjectId, ref: "Badge" }],
+    assignedProjects: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Project", default: [] },
+    ],
+    badge: { type: Number, default: 0 },
+    projectCompletionPercent: {
+      type: Object, // Use Object, not Map
+      default: {},
+    },
+    completedProjects: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Project", default: [] },
+    ],
   },
   { timestamps: true }
 );

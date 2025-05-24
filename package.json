@@ -12,7 +12,9 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "axios": "^1.9.0",
     "bcryptjs": "^3.0.2",
+    "chart.js": "^4.4.9",
     "cloudinary": "^2.6.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
@@ -20,7 +22,8 @@
     "express": "^5.1.0",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.15.0"
+    "mongoose": "^8.15.0",
+    "react-chartjs-2": "^5.3.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
