@@ -89,16 +89,62 @@ export default function Dashboard() {
           </div>
           <section>
             <h3>All Employees</h3>
-            {users.length === 0 ? (
+            {users.filter((u) => u.role === "employee").length === 0 ? (
               <p>No employees found.</p>
             ) : (
               <ul>
-                {users.map((u) => (
-                  <li key={u._id}>
-                    {u.name} ({u.email}) - Skills:{" "}
-                    {u.skills?.join(", ") || "None"}
-                  </li>
-                ))}
+                {users
+                  .filter((u) => u.role === "employee")
+                  .map((u) => (
+                    <li key={u._id}>
+                      <strong>{u.name}</strong> ({u.email}) - Skills:{" "}
+                      {u.skills?.join(", ") || "None"}
+                      <button
+                        className="btn"
+                        style={{ marginLeft: 10, background: "#007bff" }}
+                        onClick={async () => {
+                          try {
+                            await axios.patch(
+                              `/api/admin/users/${u._id}/promote-to-admin`,
+                              {},
+                              { withCredentials: true }
+                            );
+                            alert("User promoted to admin!");
+                            // Optionally refresh users list
+                            const usersRes = await axios.get(
+                              "/api/admin/users",
+                              { withCredentials: true }
+                            );
+                            setUsers(usersRes.data);
+                          } catch (err) {
+                            alert(
+                              err.response?.data?.error ||
+                                err.response?.data?.message ||
+                                "Failed to promote user"
+                            );
+                          }
+                        }}
+                      >
+                        Promote to Admin
+                      </button>
+                    </li>
+                  ))}
+              </ul>
+            )}
+          </section>
+          <section>
+            <h3>All Admins</h3>
+            {users.filter((u) => u.role === "admin").length === 0 ? (
+              <p>No admins found.</p>
+            ) : (
+              <ul>
+                {users
+                  .filter((u) => u.role === "admin")
+                  .map((u) => (
+                    <li key={u._id}>
+                      <strong>{u.name}</strong> ({u.email})
+                    </li>
+                  ))}
               </ul>
             )}
           </section>
@@ -155,7 +201,6 @@ export default function Dashboard() {
                     )
                 )
                 .map((p, i) => {
-                  // Get percent from projectCompletionPercent
                   const percent =
                     data.projectCompletionPercent &&
                     data.projectCompletionPercent[p._id] !== undefined

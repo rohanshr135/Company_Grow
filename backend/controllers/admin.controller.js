@@ -11,7 +11,7 @@ import StripeRewardTransaction, {
 } from "../models/stripeRewardTransaction.model.js";
 
 export const getAllUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({ role: "employee" }).select("-password");
+  const users = await User.find().select("-password");
   res.json(users);
 });
 
@@ -81,9 +81,7 @@ export const awardBadgeToUser = asyncHandler(async (req, res) => {
 });
 
 export const promoteToAdmin = asyncHandler(async (req, res) => {
-  const { userId } = req.params;
-
-  const user = await User.findById(userId);
+  const user = await User.findById(req.params.id);
 
   if (!user) {
     res.status(404);
