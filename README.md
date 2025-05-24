@@ -1,5 +1,6 @@
-# Company_Grow
-CompanyGrow is a smart workforce platform for organizations to nurture employee growth with tailored training, intelligent project allocation, real-time rewards, and live analytics. Match skills to projects, track progress, and boost engagement with badge-based bonuses.
+# CompanyGrow
+
+CompanyGrow is a smart workforce development platform that enables organizations to nurture employee growth through tailored training, intelligent project allocation, and real-time performance rewards. It matches employees to projects based on skills, tracks training progress, and rewards achievements with badge-based bonuses. With live analytics and a skill-driven ecosystem, it keeps teams engaged, productive, and continuously evolving.
 
 ## Features
 
@@ -8,9 +9,11 @@ CompanyGrow is a smart workforce platform for organizations to nurture employee 
 - **Employee Dashboard:** View assigned/completed projects, enrolled courses, skill progress, and request project completion or course enrollment.
 - **Course Management:** Admins can add, edit, and view courses with milestones, media, level, and duration.
 - **Project Management:** Admins can add, edit, assign, and rate projects. Employees can view and update their project progress.
-- **Analytics:** Visualize performance analytics for employees and organization (monthly completions, rewards, etc.).
+- **Analytics:** Visualize real-time performance analytics for employees and the organization (monthly completions, rewards, etc.).
 - **Profile Management:** Employees can edit their profile, skills, experience, and profile image.
 - **Reward System:** Employees earn rewards (badges, tokens, USD) for completing projects and courses.
+- **Skill Matching:** Projects are intelligently matched to employees based on their skills.
+- **Live Progress Tracking:** Track training and project progress in real time.
 - **Responsive UI:** Clean, modern interface with sticky navigation and profile access.
 
 ## Tech Stack
@@ -32,8 +35,8 @@ CompanyGrow is a smart workforce platform for organizations to nurture employee 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/company_grow.git
-   cd company_grow
+   git clone https://github.com/rohanshr135/Company_Grow.git
+   cd Company_Grow
    ```
 
 2. **Backend Setup:**
@@ -66,7 +69,7 @@ JWT_SECRET=your_jwt_secret
 ## Folder Structure
 
 ```
-company_grow/
+Company_Grow/
   backend/
     controllers/
     models/
